@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "baabac7d-5dc5-4600-a621-e2123773a5ce",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "UI",
+            "id": "d013c6c6-248e-409f-9c25-e22f80dcf2b3",
+            "actions": [],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": []
+}

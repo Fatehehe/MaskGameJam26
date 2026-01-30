@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b72b061556fe4b09b70924a892aea01, type: 3}
+  m_Name: MaskDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::MaskDatabase
+  searchFolders:
+  - Assets/[APP]/ScriptableObjects/Masks
+  items:
+  - key: MaskDenial
+    value: {fileID: 11400000, guid: 072b839540a5d47e8bbca670f003ea21, type: 2}
+  - key: MaskFear
+    value: {fileID: 11400000, guid: 397de06d48c474cea890163d1972012c, type: 2}
+  - key: MaskRegret
+    value: {fileID: 11400000, guid: 38263d6efaff140cfbf65db85d1a5c01, type: 2}
