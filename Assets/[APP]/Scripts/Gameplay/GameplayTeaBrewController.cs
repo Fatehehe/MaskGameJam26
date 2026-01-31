@@ -23,13 +23,11 @@ public class GameplayTeaBrewController : MonoBehaviour
 
     // Dependencies
     private TeaBrewingSystem brewingSystem;
-    private TeaEssenceDatabase essenceDatabase;
 
     [Inject]
-    public void Construct(TeaBrewingSystem brewingSystem, TeaEssenceDatabase essenceDatabase)
+    public void Construct(TeaBrewingSystem brewingSystem)
     {
         this.brewingSystem = brewingSystem;
-        this.essenceDatabase = essenceDatabase;
     }
 
     private void Start()
@@ -43,7 +41,7 @@ public class GameplayTeaBrewController : MonoBehaviour
         trashButton.onClick.AddListener(OnTrashClicked);
 
         // 3. Generate Essence Menu
-        GenerateEssenceMenu();
+        // GenerateEssenceMenu();
 
         // 4. PROPER SUBSCRIBE
         brewingSystem.OnInteractableStateChanged += HandleInteractableState;
@@ -64,28 +62,6 @@ public class GameplayTeaBrewController : MonoBehaviour
         trashButton.onClick.RemoveAllListeners();
     }
 
-    // --- LOGIC: GENERATE UI ---
-    private void GenerateEssenceMenu()
-    {
-        // Clean up editor dummies
-        foreach (Transform child in essenceButtonContainer) Destroy(child.gameObject);
-
-        TeaEssenceData[] allEssences = essenceDatabase.GetAllItems();
-
-        for (int i = 0; i < allEssences.Length; i++)
-        {
-            var essence = allEssences[i];
-            Button btn = Instantiate(essenceButtonPrefab, essenceButtonContainer);
-            
-            // Set Name Label
-            TMP_Text label = btn.GetComponentInChildren<TMP_Text>();
-            if (label != null) label.text = essence.EssenceName;
-
-            // Subscribe to ingredient click: Add to pot
-            btn.onClick.AddListener(() => brewingSystem.AddEssenceToPot(essence));
-        }
-    }
-
     // --- HANDLERS (CALLBACKS) ---
 
     private void HandleInteractableState(bool isVisible)
@@ -93,14 +69,11 @@ public class GameplayTeaBrewController : MonoBehaviour
         // Show/hide animation
         if (isVisible)
         {
-            teaMenuPanel.SetActive(true);
-            teaMenuPanel.transform.localScale = Vector3.zero;
-            LeanTween.scale(teaMenuPanel, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBack);
+            // Mulai GameplayTeaBrewController.cs
         }
         else
         {
-            LeanTween.scale(teaMenuPanel, Vector3.zero, 0.2f).setEase(LeanTweenType.easeInBack)
-                .setOnComplete(() => teaMenuPanel.SetActive(false));
+            
         }
     }
 
