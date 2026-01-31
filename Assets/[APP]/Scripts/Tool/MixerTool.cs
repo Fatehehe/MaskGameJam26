@@ -2,26 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public interface IDropHandlerTarget
-{
-    bool TryAccept(IDraggableData essence);
-}
-
-public class MixerTool : MonoBehaviour, IDropHandlerTarget
+public class MixerTool : MonoBehaviour, IEssenceDropTarget
 {
     [Header("UI")]
     [SerializeField] private Image slot1Icon;
     [SerializeField] private Image slot2Icon;
-    private TeaBrewingSystem teaSystem;
 
-    private List<IDraggableData> essences = new List<IDraggableData>(2);
+    private List<TeaEssenceData> essences = new List<TeaEssenceData>();
 
-    private void Start()
-    {
-        // teaSystem.OnInteractableStateChanged +=
-    }
-
-    public bool TryAccept(IDraggableData essence)
+    public bool TryAccept(TeaEssenceData essence)
     {
         if (essence == null)
             return false;
@@ -32,11 +21,11 @@ public class MixerTool : MonoBehaviour, IDropHandlerTarget
             return false;
         }
 
-        AddEssence(essence);
-        return true; // object tidak dihancurkan
+        TeaBrewEvents.OnRequestEssenceAdd?.Invoke(essence);
+        return true;
     }
 
-    private void AddEssence(IDraggableData data)
+    private void AddEssence(TeaEssenceData data)
     {
         essences.Add(data);
 
@@ -44,8 +33,6 @@ public class MixerTool : MonoBehaviour, IDropHandlerTarget
             slot1Icon.sprite = data.DraggableIcon;
         else if (essences.Count == 2 && slot2Icon != null)
             slot2Icon.sprite = data.DraggableIcon;
-
-        // Debug.Log($"Added essence: {data.EssenceName}");
     }
 
     public void Mix()
@@ -56,10 +43,6 @@ public class MixerTool : MonoBehaviour, IDropHandlerTarget
             return;
         }
 
-        // Debug.Log($"Mixing {essences[0].EssenceName} + {essences[1].EssenceName}");
-
-        // TODO: cek resep di sini
-
         ClearMixer();
     }
 
@@ -69,5 +52,7 @@ public class MixerTool : MonoBehaviour, IDropHandlerTarget
 
         if (slot1Icon != null) slot1Icon.sprite = null;
         if (slot2Icon != null) slot2Icon.sprite = null;
+
+        TeaBrewEvents.OnRequestPotClear?.Invoke();
     }
 }

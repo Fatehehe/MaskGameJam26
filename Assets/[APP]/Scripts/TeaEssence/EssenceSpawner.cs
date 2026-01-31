@@ -1,14 +1,9 @@
 using System;
 using UnityEngine;
 
-public interface IDraggableData
-{
-    Sprite DraggableIcon { get; }
-}
-
 public class EssenceSpawner : MonoBehaviour
 {
-    public static event Action<Transform, IDraggableData> OnEssenceSpawnRequested;
+    public static event Func<Transform, TeaEssenceData, EssenceDragItem> OnEssenceSpawnRequested;
 
     [SerializeField] private EssenceDragItem dragPrefab;
     [SerializeField] private Transform canvas;
@@ -23,18 +18,18 @@ public class EssenceSpawner : MonoBehaviour
         OnEssenceSpawnRequested -= HandleSpawnRequest;
     }
 
-    private void HandleSpawnRequest(Transform origin, IDraggableData data)
+    private EssenceDragItem HandleSpawnRequest(Transform origin, TeaEssenceData data)
     {
         if (data == null || dragPrefab == null || canvas == null)
-            return;
+            return null;
 
-        EssenceDragItem item = Instantiate(dragPrefab, canvas.transform);
+        EssenceDragItem item = Instantiate(dragPrefab, canvas);
         item.Initialize(data, origin.position);
+        return item;
     }
 
-    // DIPANGGIL OLEH SOURCE
-    public static void RequestSpawn(Transform origin, IDraggableData data)
+    public static EssenceDragItem RequestSpawn(Transform origin, TeaEssenceData data)
     {
-        OnEssenceSpawnRequested?.Invoke(origin, data);
+        return OnEssenceSpawnRequested?.Invoke(origin, data);
     }
 }
