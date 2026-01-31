@@ -7,7 +7,6 @@ public class ProjectLifetimeScope : LifetimeScope
 {
     [SerializeField] private SoundSystem soundSystem;
     [SerializeField] protected GameObject loadingPrefab;
-    [SerializeField] protected GameObject playerInputPrefab;
     [SerializeField] protected MaskDatabase maskDatabase;
     [SerializeField] protected TeaEssenceDatabase teaDatabase;
     [SerializeField] protected CharacterVisualDatabase characterVisualDatabase;
