@@ -51,5 +51,6 @@ MonoBehaviour:
   soundSystem: {fileID: 4167356189360771819, guid: 74695d3a5b98e7248b70f47f8b104fb1, type: 3}
   loadingPrefab: {fileID: 5368669579010575552, guid: 508aa2eb43162ad4a9a7d1514a5e513a, type: 3}
   maskDatabase: {fileID: 11400000, guid: c35756cc58b334456abb986f13edf5c2, type: 2}
-  teaDatabase: {fileID: 11400000, guid: a471cfb0af8b9421eb164bc08b4476dc, type: 2}
+  teaDatabase: {fileID: 11400000, guid: ad2783b3692254654b2a688776c102d3, type: 2}
+  teaEssenceDatabase: {fileID: 11400000, guid: a471cfb0af8b9421eb164bc08b4476dc, type: 2}
   characterVisualDatabase: {fileID: 11400000, guid: 959e09e3bce7844b891d611e3d0752c0, type: 2}
