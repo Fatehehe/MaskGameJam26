@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameplayLifetimeScope : LifetimeScope
 {
     [SerializeField] private GameplayUIController gameplayUIController;
+    [SerializeField] private GameplayTeaBrewController gameplayTeaBrewController;
+
     protected override void Configure(IContainerBuilder builder)
     {
         // State Holder 
@@ -16,5 +18,6 @@ public class GameplayLifetimeScope : LifetimeScope
 
         // UI Controller
         builder.RegisterComponent(gameplayUIController);
+        builder.RegisterComponent(gameplayTeaBrewController);
     }
 }
