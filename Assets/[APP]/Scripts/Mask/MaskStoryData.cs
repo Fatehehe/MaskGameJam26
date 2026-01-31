@@ -24,14 +24,10 @@ public class MaskStoryData : ScriptableObject
 [System.Serializable]
 public class DialogueNode
 {
-    [Header("Requirements (Conditions)")]
-    [SerializeField] private MaskState requiredState;
-    public MaskState RequiredState => requiredState;
-
     [SerializeField, Range(0f, 100f)] private float minCrackPercentage = 0f;
     public float MinCrackPercentage => minCrackPercentage;
-    [SerializeField] private TeaData specificTeaReaction;
-    public TeaData SpecificTeaReaction => specificTeaReaction;
+    [SerializeField] private TeaEssenceData specificTeaReaction;
+    public TeaEssenceData SpecificTeaReaction => specificTeaReaction;
 
     [Header("Content")]
     [SerializeField]

@@ -10,7 +10,7 @@ public class TeaBrewingSystem
         _customerProvider = customerProvider;
     }
 
-    public void ServeTea(TeaData tea)
+    public void ServeTea(TeaEssenceData tea)
     {
         if (!_customerProvider.HasCustomer) return;
 

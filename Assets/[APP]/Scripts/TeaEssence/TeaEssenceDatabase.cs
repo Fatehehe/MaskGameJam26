@@ -6,13 +6,13 @@ using Modules;
 using UnityEditor;
 #endif
 
-[CreateAssetMenu(fileName = "TeaDatabase", menuName = "Databases/Tea Database")]
-public class TeaDatabase : BaseDatabase<TeaData>
+[CreateAssetMenu(fileName = "TeaEssenceDatabase", menuName = "Databases/Tea Essence Database")]
+public class TeaEssenceDatabase : BaseDatabase<TeaEssenceData>
 {
     [System.Serializable]
-    public class TeaPair : DatabaseItemPair<TeaData>
+    public class TeaPair : DatabaseItemPair<TeaEssenceData>
     {
-        public TeaPair(string key, TeaData value)
+        public TeaPair(string key, TeaEssenceData value)
         {
             this.key = key;
             this.value = value;
@@ -22,11 +22,11 @@ public class TeaDatabase : BaseDatabase<TeaData>
     [Header("Teas")]
     [SerializeField] private List<TeaPair> items = new List<TeaPair>();
 
-    private readonly Dictionary<string, TeaData> lookup = new Dictionary<string, TeaData>();
+    private readonly Dictionary<string, TeaEssenceData> lookup = new Dictionary<string, TeaEssenceData>();
 
-    public override TeaData[] GetAllItems()
+    public override TeaEssenceData[] GetAllItems()
     {
-        TeaData[] arr = new TeaData[items.Count];
+        TeaEssenceData[] arr = new TeaEssenceData[items.Count];
         for (int i = 0; i < items.Count; i++)
         {
             arr[i] = items[i]?.Value;
@@ -34,14 +34,14 @@ public class TeaDatabase : BaseDatabase<TeaData>
         return arr;
     }
 
-    public override TeaData GetItem(int index)
+    public override TeaEssenceData GetItem(int index)
     {
         if (index < 0 || index >= items.Count)
             return null;
         return items[index]?.Value;
     }
 
-    public override TeaData GetItem(string id)
+    public override TeaEssenceData GetItem(string id)
     {
         if (string.IsNullOrEmpty(id))
             return null;
@@ -53,7 +53,7 @@ public class TeaDatabase : BaseDatabase<TeaData>
         return null;
     }
 
-    public override TeaData GetRandom()
+    public override TeaEssenceData GetRandom()
     {
         if (items == null || items.Count == 0)
             return null;
@@ -62,7 +62,7 @@ public class TeaDatabase : BaseDatabase<TeaData>
     }
 
 #if UNITY_EDITOR
-    protected override void Add(TeaData value)
+    protected override void Add(TeaEssenceData value)
     {
         if (value == null)
             return;
@@ -105,9 +105,9 @@ public class TeaDatabase : BaseDatabase<TeaData>
     }
 #endif
 
-    private static string GetKey(TeaData data)
+    private static string GetKey(TeaEssenceData data)
     {
-        return data != null ? data.TeaId : null;
+        return data != null ? data.TeaEssenceId : null;
     }
 
     private void EnsureIndex()
@@ -137,14 +137,14 @@ public class TeaDatabase : BaseDatabase<TeaData>
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(TeaDatabase))]
+[CustomEditor(typeof(TeaEssenceDatabase))]
 public class TeaDatabaseEditor : Editor
 {
-    private TeaDatabase script;
+    private TeaEssenceDatabase script;
 
     private void OnEnable()
     {
-        script = (TeaDatabase)target;
+        script = (TeaEssenceDatabase)target;
     }
 
     public override void OnInspectorGUI()

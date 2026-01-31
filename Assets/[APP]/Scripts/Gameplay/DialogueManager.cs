@@ -6,15 +6,14 @@ public class DialogueManager
 
         var nodes = customer.ActiveMaskStoryData.DialogueNodes;
         float crackPercent = customer.CrackPercentage;
-        TeaData lastTea = customer.TeaHistory.Count > 0 ? customer.TeaHistory[customer.TeaHistory.Count - 1] : null;
+        TeaEssenceData lastTea = customer.TeaHistory.Count > 0 ? customer.TeaHistory[customer.TeaHistory.Count - 1] : null;
 
         if (lastTea != null)
         {
             for (int i = 0; i < nodes.Count; i++)
             {
                 var n = nodes[i];
-                if (n.RequiredState == customer.CurrentState &&
-                    n.SpecificTeaReaction == lastTea &&
+                if (n.SpecificTeaReaction == lastTea &&
                     crackPercent >= n.MinCrackPercentage)
                 {
                     return n;
@@ -28,7 +27,6 @@ public class DialogueManager
         {
             var n = nodes[i];
             if (n.SpecificTeaReaction == null &&
-                n.RequiredState == customer.CurrentState &&
                 crackPercent >= n.MinCrackPercentage)
             {
                 if (n.MinCrackPercentage > bestMinCrackPercentage)

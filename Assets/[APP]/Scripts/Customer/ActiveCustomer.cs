@@ -11,10 +11,10 @@ public class ActiveCustomer
     // State Gameplay (mutable)
     public float CurrentCrackPoints { get; set; }
     public MaskState CurrentState { get; set; }
-    public List<TeaData> TeaHistory { get; set; } = new List<TeaData>();
+    public List<TeaEssenceData> TeaHistory { get; set; } = new List<TeaEssenceData>();
     public float CrackPercentage => (CurrentCrackPoints / ActiveMaskData.MaxCrackPoints) * 100f;
 
-    public TeaData GetLastTea()
+    public TeaEssenceData GetLastTea()
     {
         if (TeaHistory == null || TeaHistory.Count == 0) return null;
         return TeaHistory[TeaHistory.Count - 1];

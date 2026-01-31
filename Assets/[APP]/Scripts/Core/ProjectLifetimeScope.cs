@@ -9,7 +9,7 @@ public class ProjectLifetimeScope : LifetimeScope
     [SerializeField] protected GameObject loadingPrefab;
     [SerializeField] protected GameObject playerInputPrefab;
     [SerializeField] protected MaskDatabase maskDatabase;
-    [SerializeField] protected TeaDatabase teaDatabase;
+    [SerializeField] protected TeaEssenceDatabase teaDatabase;
     [SerializeField] protected CharacterVisualDatabase characterVisualDatabase;
 
     protected override void Configure(IContainerBuilder builder)
