@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -5,20 +6,16 @@ using UnityEngine.UI;
 public class EssenceObject : InteractableObject
 {
     [SerializeField] private Image icon;
-    [SerializeField] private ScriptableObject dataAsset;
-
-    private IDraggableData data;
-    public IDraggableData Data => data;
+    [SerializeField] private TeaEssenceData data;
+    public TeaEssenceData Data => data;
 
     protected override void Awake()
     {
         base.Awake();
 
-        data = dataAsset as IDraggableData;
-
         if (data == null)
         {
-            Debug.LogError($"{name} dataAsset does not implement IDraggableData!");
+            Debug.LogError($"{name} dataAsset is not a valid TeaEssenceData!");
             return;
         }
 
@@ -27,7 +24,7 @@ public class EssenceObject : InteractableObject
 
     protected override bool TryHandleDrop(PointerEventData eventData)
     {
-        var dropTarget = eventData.pointerEnter?.GetComponent<IDropHandlerTarget>();
+        var dropTarget = eventData.pointerEnter?.GetComponent<IEssenceDropTarget>();
         if (dropTarget != null)
         {
             return dropTarget.TryAccept(data);
@@ -35,19 +32,22 @@ public class EssenceObject : InteractableObject
         return false;
     }
 
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        OnDragStart(eventData);
+    }
+
     protected override void OnDragStart(PointerEventData eventData)
     {
         if (data == null) return;
-        EssenceSpawner.RequestSpawn(rectTransform, data);
-    }
 
-    protected override void OnDragging(PointerEventData eventData)
-    {
-        // rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-    }
+        EssenceDragItem spawnedItem = EssenceSpawner.RequestSpawn(rectTransform, data);
 
-    protected override void OnDragEnd(PointerEventData eventData, bool success)
-    {
+        if (spawnedItem != null)
+        {
+            eventData.pointerDrag = spawnedItem.gameObject;
 
+            spawnedItem.OnBeginDrag(eventData);
+        }
     }
 }

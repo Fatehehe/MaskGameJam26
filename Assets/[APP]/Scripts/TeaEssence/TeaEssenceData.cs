@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "TeaEssenceData", menuName = "Data/Tea Essence Data")]
-public class TeaEssenceData : ScriptableObject, IDraggableData
+public class TeaEssenceData : ScriptableObject
 {
     [Tooltip("Stable ID derived from the asset name. Rename the asset to change it.")]
     [SerializeField, ReadOnly] private string essenceId;

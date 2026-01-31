@@ -5,18 +5,18 @@ using UnityEngine.UI;
 public class EssenceDragItem : InteractableObject
 {
     [SerializeField] private Image icon;
-    private IDraggableData data;
+    private TeaEssenceData data;
 
-    public void Initialize(IDraggableData newData, Vector3 startPos)
+    public void Initialize(TeaEssenceData newData, Vector3 startPos)
     {
         data = newData;
         icon.sprite = data.DraggableIcon;
-        rectTransform.position = startPos;
+        transform.position = startPos;
     }
 
     protected override bool TryHandleDrop(PointerEventData eventData)
     {
-        var dropTarget = eventData.pointerEnter?.GetComponent<IDropHandlerTarget>();
+        var dropTarget = eventData.pointerEnter?.GetComponent<IEssenceDropTarget>();
 
         if (dropTarget != null && dropTarget.TryAccept(data))
         {
