@@ -6,8 +6,8 @@
   <Project Path="VContainer.csproj" />
   <Project Path="AppModuleSoundSystem.Editor.csproj" />
   <Project Path="VContainer.Editor.csproj" />
-  <Project Path="AppModuleSavingSystem.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="AppModuleSavingSystem.csproj" />
   <Project Path="AppModuleSoundSystem.csproj" />
   <Project Path="SimpleJSON.csproj" />
 </Solution>

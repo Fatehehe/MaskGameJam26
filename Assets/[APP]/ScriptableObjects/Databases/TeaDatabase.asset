@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b78c52a32fc45a8a346b3606523ee2, type: 3}
+  m_Name: TeaDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::TeaDatabase
+  searchFolders:
+  - Assets/[APP]/ScriptableObjects/Teas
+  items:
+  - key: Tea_A
+    value: {fileID: 11400000, guid: cc2c4e669ec364981abefaf427a48ada, type: 2}

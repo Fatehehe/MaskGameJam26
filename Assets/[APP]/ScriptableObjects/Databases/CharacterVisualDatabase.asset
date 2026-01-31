@@ -15,5 +15,5 @@ MonoBehaviour:
   searchFolders:
   - Assets/[APP]/ScriptableObjects/CharacterVisuals
   items:
-  - key: Girl_Old
+  - key: Char_Test
     value: {fileID: 11400000, guid: 81fd723e23cf64b7cb2d5af9b28f282a, type: 2}

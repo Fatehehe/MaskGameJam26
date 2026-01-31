@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e60bd55015324d138f7d5f6c93be05c, type: 3}
+  m_Name: MaskStory_TestLinear
+  m_EditorClassIdentifier: Assembly-CSharp::MaskStoryData
+  storyId: MaskStory_TestLinear
+  dialogueNodes:
+  - minCrackPercentage: 0
+    specificTeaReaction: {fileID: 0}
+    lines:
+    - "Permisi\u2026 boleh aku duduk sebentar di sini?"
+    - "Tempat ini terasa\u2026 lebih tenang dari yang kukira."
+    - Aku tidak bermaksud mengganggu. Aku hanya butuh berhenti sejenak.
+    - "Akhir-akhir ini rasanya semuanya terlalu ramai\u2026 tapi juga terasa kosong."
+    - Aku sendiri tidak yakin kenapa aku ada di sini.
+    endsConversation: 0
+  - minCrackPercentage: 25
+    specificTeaReaction: {fileID: 0}
+    lines:
+    - "Kadang aku merasa kehilangan sesuatu\u2026 tapi tidak tahu apa."
+    - Seperti ada bagian dari hari-hariku yang hilang begitu saja.
+    - Aku mencoba mengingat kapan terakhir kali aku benar-benar merasa ringan.
+    - "Lucu ya\u2026 rasanya seperti merindukan sesuatu yang bahkan tidak bisa kujelaskan."
+    - Mungkin aku hanya terlalu lama memendam semuanya sendiri.
+    endsConversation: 0
+  - minCrackPercentage: 50
+    specificTeaReaction: {fileID: 0}
+    lines:
+    - Aku sering bilang ke diriku sendiri kalau semuanya baik-baik saja.
+    - "Tapi kalau memang baik-baik saja\u2026 kenapa rasanya sesak seperti ini?"
+    - "Aku tersenyum seperti biasa, bicara seperti biasa\u2026 tapi rasanya jauh."
+    - "Ada hal-hal yang ingin kukatakan\u2026 tapi selalu berhenti di tenggorokan."
+    - Apa semua orang juga merasa seperti ini diam-diam?
+    endsConversation: 0
+  - minCrackPercentage: 75
+    specificTeaReaction: {fileID: 0}
+    lines:
+    - Aku lelah berpura-pura kuat sepanjang waktu.
+    - "Lelah menjawab \u2018aku nggak apa-apa\u2019 ketika sebenarnya tidak."
+    - "Aku takut kalau aku berhenti menahan ini\u2026 semuanya akan runtuh."
+    - Tapi menahannya terus juga membuatku perlahan menghilang.
+    - "Aku cuma ingin\u2026 didengar tanpa harus menjelaskan semuanya."
+    endsConversation: 0
+  - minCrackPercentage: 100
+    specificTeaReaction: {fileID: 0}
+    lines:
+    - Setidaknya sekarang aku bisa mengakui kalau aku memang sedih.
+    - Ternyata mengatakannya tidak seburuk yang kubayangkan.
+    - Mungkin aku tidak harus langsung kuat lagi.
+    - Mungkin pelan-pelan saja sudah cukup.
+    - Terima kasih sudah diam dan mendengarkan. Itu sudah lebih dari cukup.
+    endsConversation: 1

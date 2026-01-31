@@ -26,8 +26,8 @@ public class DialogueNode
 {
     [SerializeField, Range(0f, 100f)] private float minCrackPercentage = 0f;
     public float MinCrackPercentage => minCrackPercentage;
-    [SerializeField] private TeaEssenceData specificTeaReaction;
-    public TeaEssenceData SpecificTeaReaction => specificTeaReaction;
+    [SerializeField] private TeaData specificTeaReaction;
+    public TeaData SpecificTeaReaction => specificTeaReaction;
 
     [Header("Content")]
     [SerializeField]
@@ -42,7 +42,4 @@ public class DialogueNode
 
     [SerializeField] private bool endsConversation;
     public bool EndsConversation => endsConversation;
-
-    [SerializeField] private bool startsConversation;
-    public bool StartsConversation => startsConversation;
 }

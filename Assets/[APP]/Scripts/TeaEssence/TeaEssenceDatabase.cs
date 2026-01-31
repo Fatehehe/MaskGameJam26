@@ -107,7 +107,7 @@ public class TeaEssenceDatabase : BaseDatabase<TeaEssenceData>
 
     private static string GetKey(TeaEssenceData data)
     {
-        return data != null ? data.TeaEssenceId : null;
+        return data != null ? data.EssenceId : null;
     }
 
     private void EnsureIndex()
@@ -138,7 +138,7 @@ public class TeaEssenceDatabase : BaseDatabase<TeaEssenceData>
 
 #if UNITY_EDITOR
 [CustomEditor(typeof(TeaEssenceDatabase))]
-public class TeaDatabaseEditor : Editor
+public class TeaEssenceDatabaseEditor : Editor
 {
     private TeaEssenceDatabase script;
 

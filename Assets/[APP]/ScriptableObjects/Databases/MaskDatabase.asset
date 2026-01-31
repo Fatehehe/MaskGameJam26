@@ -15,9 +15,5 @@ MonoBehaviour:
   searchFolders:
   - Assets/[APP]/ScriptableObjects/Masks
   items:
-  - key: MaskDenial
-    value: {fileID: 11400000, guid: 072b839540a5d47e8bbca670f003ea21, type: 2}
-  - key: MaskFear
-    value: {fileID: 11400000, guid: 397de06d48c474cea890163d1972012c, type: 2}
-  - key: MaskRegret
+  - key: Mask_Test
     value: {fileID: 11400000, guid: 38263d6efaff140cfbf65db85d1a5c01, type: 2}

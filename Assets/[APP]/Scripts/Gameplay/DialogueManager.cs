@@ -6,7 +6,7 @@ public class DialogueManager
 
         var nodes = customer.ActiveMaskStoryData.DialogueNodes;
         float crackPercent = customer.CrackPercentage;
-        TeaEssenceData lastTea = customer.TeaHistory.Count > 0 ? customer.TeaHistory[customer.TeaHistory.Count - 1] : null;
+        TeaData lastTea = customer.TeaHistory.Count > 0 ? customer.GetLastTea() : null;
 
         if (lastTea != null)
         {
