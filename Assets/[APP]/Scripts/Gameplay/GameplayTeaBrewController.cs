@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class GameplayTeaBrewController : MonoBehaviour
 {
+    // --- UI ELEMENTS ---
     [Header("Main Containers")]
     [SerializeField] private GameObject teaMenuPanel; // Main Brewing UI panel
     [SerializeField] private Transform essenceButtonContainer; // Container for essence buttons

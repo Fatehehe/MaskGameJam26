@@ -1,11 +1,9 @@
 using UnityEngine;
-using TMPro;
 using VContainer;
 using System.Collections;
 
 public class GameplayUIController : MonoBehaviour
-{
-    [Header("Game Session Settings")]
+{    [Header("Game Session Settings")]
     [SerializeField] private int maxCustomers = 3;
 
     [Header("Sub-Controllers")]

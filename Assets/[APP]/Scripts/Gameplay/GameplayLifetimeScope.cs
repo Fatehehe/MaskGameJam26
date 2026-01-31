@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameplayLifetimeScope : LifetimeScope
 {
+    // References to UI Controllers
     [SerializeField] private GameplayUIController gameplayUIController;
     [SerializeField] private GameplayTeaBrewController gameplayTeaBrewController;
 

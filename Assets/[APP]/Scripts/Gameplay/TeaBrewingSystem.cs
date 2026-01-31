@@ -11,6 +11,7 @@ public enum BrewingStatus
 
 public class TeaBrewingSystem
 {
+    // Constants
     private const float CRACKED_THRESHOLD = 50f;
     private const float BROKEN_THRESHOLD = 100f;
     private const int MAX_ESSENCES_IN_POT = 3;
