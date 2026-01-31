@@ -21,6 +21,8 @@ public class GameplayTeaBrewController : MonoBehaviour
     [SerializeField] private Button trashButton; // "Trash" button
     [SerializeField] private TMP_Text statusLabel; // Info: Incomplete/Brewable/Ruined
 
+    [SerializeField] List<EssenceObject> essenceObjects;
+
     // Dependencies
     private TeaBrewingSystem brewingSystem;
     private TeaEssenceDatabase essenceDatabase;
@@ -43,7 +45,7 @@ public class GameplayTeaBrewController : MonoBehaviour
         trashButton.onClick.AddListener(OnTrashClicked);
 
         // 3. Generate Essence Menu
-        GenerateEssenceMenu();
+        // GenerateEssenceMenu();
 
         // 4. PROPER SUBSCRIBE
         brewingSystem.OnInteractableStateChanged += HandleInteractableState;
@@ -76,7 +78,7 @@ public class GameplayTeaBrewController : MonoBehaviour
         {
             var essence = allEssences[i];
             Button btn = Instantiate(essenceButtonPrefab, essenceButtonContainer);
-            
+
             // Set Name Label
             TMP_Text label = btn.GetComponentInChildren<TMP_Text>();
             if (label != null) label.text = essence.EssenceName;
@@ -122,7 +124,7 @@ public class GameplayTeaBrewController : MonoBehaviour
                 brewButton.interactable = true;
                 statusLabel.text = "Ready to brew!";
                 statusLabel.color = Color.cyan;
-                
+
                 // Small bounce animation so player knows the recipe is ready
                 LeanTween.scale(brewButton.gameObject, Vector3.one * 1.1f, 0.15f).setLoopPingPong(1);
                 break;
@@ -163,7 +165,7 @@ public class GameplayTeaBrewController : MonoBehaviour
     private void OnTrashClicked()
     {
         brewingSystem.ClearPot();
-        
+
         // Reset animation: Scale down icon container briefly
         LeanTween.scale(potIconContainer.gameObject, Vector3.one * 0.8f, 0.1f).setLoopPingPong(1);
     }
