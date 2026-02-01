@@ -11,6 +11,7 @@ public class HomeButtonUI : MonoBehaviour
 
     [Header("Floating Text")]
     [SerializeField] private RectTransform textTarget;
+    [SerializeField] private RectTransform titleTarget;
     [SerializeField] private float floatDistance = 20f;
     [SerializeField] private float floatSpeed = 2f;
     [SerializeField] private float minAlpha = 0.35f;
@@ -28,6 +29,7 @@ public class HomeButtonUI : MonoBehaviour
 
     private Graphic textGraphic;
     private Vector2 startPos;
+    private Vector2 startTitlePos;
 
     private int currentPanelIndex = 0;
     private bool isTyping = false;
@@ -51,6 +53,11 @@ public class HomeButtonUI : MonoBehaviour
             textGraphic = textTarget.GetComponent<Graphic>();
         }
 
+        if (titleTarget != null)
+        {
+            startTitlePos = titleTarget.anchoredPosition;
+        }
+
         storyboardRoot.SetActive(false);
         nextButton.onClick.AddListener(OnNextClicked);
     }
@@ -58,6 +65,7 @@ public class HomeButtonUI : MonoBehaviour
     void Update()
     {
         AnimateHomeText();
+        // AnimatedTitle();
     }
 
     void AnimateHomeText()
@@ -73,6 +81,13 @@ public class HomeButtonUI : MonoBehaviour
         Color c = textGraphic.color;
         c.a = alpha;
         textGraphic.color = c;
+    }
+
+    void AnimatedTitle()
+    {
+        if (titleTarget == null) return;
+        float yOffset = Mathf.Sin(Time.time * floatSpeed) * floatDistance;
+        titleTarget.anchoredPosition = startTitlePos + new Vector2(0, yOffset);
     }
 
     void StartStorySequence()
