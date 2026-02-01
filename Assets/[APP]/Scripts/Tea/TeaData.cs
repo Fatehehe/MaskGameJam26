@@ -16,6 +16,8 @@ public class TeaData : ScriptableObject
     public Sprite Icon => icon;
     [SerializeField] private string description;
     public string Description => description;
+    [SerializeField] private Sprite grindedIcon;
+    public Sprite GrindedIcon => grindedIcon;
 
     [Header("Gameplay Properties")]
     [SerializeField] private List<TeaEssenceData> requiredEssences = new List<TeaEssenceData>();
@@ -24,6 +26,7 @@ public class TeaData : ScriptableObject
     public EmotionType EmotionType => emotionType;
     [SerializeField, Range(0f, 100f)] private float crackImpact;
     public float CrackImpact => crackImpact;
+    
     
 #if UNITY_EDITOR
     private void OnValidate()

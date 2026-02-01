@@ -14,16 +14,15 @@ public class TeaBrewingSystem
     // Constants
     private const float CRACKED_THRESHOLD = 50f;
     private const float BROKEN_THRESHOLD = 100f;
-    private const int MAX_ESSENCES_IN_POT = 3;
+    public readonly static int MAX_ESSENCES_IN_POT = 2;
 
     private readonly ActiveCustomerProvider customerProvider;
     private readonly TeaDatabase teaDatabase;
 
     private List<TeaEssenceData> currentPot = new List<TeaEssenceData>();
+    public int CurrentPotCount => currentPot.Count;
 
-    public event Action OnTeaServed;
-    public event Action<bool> OnInteractableStateChanged;
-    public event Action<List<TeaEssenceData>, BrewingStatus> OnPotUpdated;
+    public TeaData CurrentValidRecipe { get; private set; }
 
     public TeaBrewingSystem(ActiveCustomerProvider customerProvider, TeaDatabase teaDatabase)
     {
@@ -40,13 +39,13 @@ public class TeaBrewingSystem
         BrewingStatus status = CheckRecipeStatus(currentPot);
 
         Debug.Log($"Added {essence.name}. Status: {status}");
-        OnPotUpdated?.Invoke(currentPot, status);
+        GameplayEvents.OnPotUpdated?.Invoke(currentPot, status);
     }
 
     public void ClearPot()
     {
         currentPot.Clear();
-        OnPotUpdated?.Invoke(currentPot, BrewingStatus.Incomplete);
+        GameplayEvents.OnPotUpdated?.Invoke(currentPot, BrewingStatus.Incomplete);
     }
 
     public void BrewAndServe()
@@ -177,13 +176,13 @@ public class TeaBrewingSystem
         UpdateMaskState(customer);
 
         ClearPot();
-        OnTeaServed?.Invoke();
+        GameplayEvents.OnTeaServed?.Invoke();
     }
     
     public void SetInteractable(bool state) 
     {
         if (!state) ClearPot();
-        OnInteractableStateChanged?.Invoke(state);
+        GameplayEvents.OnBrewingInterfaceStateChanged?.Invoke(state);
     }
     
     private void UpdateMaskState(ActiveCustomer customer)
@@ -196,5 +195,16 @@ public class TeaBrewingSystem
             customer.CurrentState = MaskState.Cracked;
         else
             customer.CurrentState = MaskState.Intact;
+    }
+
+    public TeaData PreviewRecipe()
+    {
+        return FindMatchingRecipe(currentPot);
+    }
+
+    public void FinalizeServe(TeaData tea)
+    {
+        if (tea == null) return;
+        ServeFinalTea(tea);
     }
 }

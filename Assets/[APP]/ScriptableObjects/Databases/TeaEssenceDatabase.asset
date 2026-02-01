@@ -19,5 +19,3 @@ MonoBehaviour:
     value: {fileID: 11400000, guid: 584c55b95737341f2a16ec64317301eb, type: 2}
   - key: TeaEssence_B
     value: {fileID: 11400000, guid: dbd975363a74d41d7b1dc13f1cef6a52, type: 2}
-  - key: TeaEssence_C
-    value: {fileID: 11400000, guid: b2f8b3c00d2104462aa00b8961138076, type: 2}

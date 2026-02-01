@@ -1,50 +1,69 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System;
 
 public class KettleTool : InteractableObject
 {
-    private enum KettleState { Idle, OnStove, Boiling, Boiled }
+    public enum KettleState { Idle, OnStove, Boiling, Boiled }
 
     [Header("Boiling Settings")]
     [SerializeField] private float boilingTime = 3f;
 
+    public event Action<KettleState> OnStateChanged;
+
     private KettleState state = KettleState.Idle;
+    public KettleState State => state;
     private Coroutine boilingRoutine;
     private StoveTool currentStove;
-
-    private Vector2 originalPos;
-    private Transform originalParent;
 
     protected override void Awake()
     {
         base.Awake();
-        CacheOriginalTransform();
     }
 
-    private void CacheOriginalTransform()
+    public override void ForceReset()
     {
-        originalPos = rectTransform.anchoredPosition;
-        originalParent = transform.parent;
+        base.ForceReset();
+
+        CancelBoiling();
+        
+        if (currentStove != null)
+        {
+            currentStove.RemoveKettle();
+            currentStove = null;
+        }
+
+        Debug.Log("Kettle Reset to Shelf & Cooled Down.");
     }
 
     protected override bool TryHandleDrop(PointerEventData eventData)
     {
         StoveTool stove = eventData.pointerEnter?.GetComponentInParent<StoveTool>();
-        if (stove == null)
+        if (stove != null)
         {
+            AttachToStove(stove);
+            return true;
+        }
+
+        GlassTool glass = eventData.pointerEnter?.GetComponent<GlassTool>();
+        if (glass != null && State == KettleState.Boiled)
+        {
+            glass.AddHotWater();
+            ChangeState(KettleState.Idle);
+
             DetachToOrigin();
             return false;
         }
 
-        AttachToStove(stove);
-        return true;
+        DetachToOrigin();
+        return false;
     }
 
     private void AttachToStove(StoveTool stove)
     {
         currentStove = stove;
-        state = KettleState.OnStove;
+        ChangeState(KettleState.OnStove);
 
         transform.SetParent(stove.snapPoint);
         rectTransform.anchoredPosition = Vector2.zero;
@@ -61,7 +80,7 @@ public class KettleTool : InteractableObject
     private void StartBoiling()
     {
         StopBoilingRoutine();
-        state = KettleState.Boiling;
+        ChangeState(KettleState.Boiling);
         boilingRoutine = StartCoroutine(BoilingProcess());
         Debug.Log("Kettle started boiling...");
     }
@@ -70,14 +89,14 @@ public class KettleTool : InteractableObject
     {
         yield return new WaitForSeconds(boilingTime);
         boilingRoutine = null;
-        state = KettleState.Boiled;
+        ChangeState(KettleState.Boiled);
         Debug.Log("Kettle finished boiling!");
     }
 
     private void CancelBoiling()
     {
         StopBoilingRoutine();
-        state = KettleState.Idle;
+        ChangeState(KettleState.Idle);
 
         if (currentStove != null)
             currentStove.RemoveKettle();
@@ -115,17 +134,12 @@ public class KettleTool : InteractableObject
     protected override void OnDragEnd(PointerEventData eventData, bool success)
     {
         if (!success)
-            ReturnToOriginal();
+            ReturnToStartPosition();
     }
 
-    protected override void DetachToOrigin()
+    private void ChangeState(KettleState newState)
     {
-        ReturnToOriginal();
-    }
-
-    private void ReturnToOriginal()
-    {
-        transform.SetParent(originalParent);
-        rectTransform.anchoredPosition = originalPos;
+        state = newState;
+        OnStateChanged?.Invoke(state);
     }
 }

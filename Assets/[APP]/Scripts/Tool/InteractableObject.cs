@@ -7,6 +7,8 @@ public abstract class InteractableObject : MonoBehaviour,
     protected RectTransform rectTransform;
     protected Canvas canvas;
 
+    protected Vector2 initialPos;
+    protected Transform initialParent;
     private Vector2 startAnchoredPos;
     private Transform startParent;
     private CanvasGroup canvasGroup;
@@ -19,6 +21,19 @@ public abstract class InteractableObject : MonoBehaviour,
 
         if (canvasGroup == null)
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+        initialPos = rectTransform.anchoredPosition;
+        initialParent = transform.parent;
+    }
+
+    public virtual void ForceReset()
+    {
+        transform.SetParent(initialParent);
+        rectTransform.anchoredPosition = initialPos;
+        transform.localRotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
+
+        if (canvasGroup != null) canvasGroup.blocksRaycasts = true;
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
@@ -60,8 +75,7 @@ public abstract class InteractableObject : MonoBehaviour,
 
     protected virtual void DetachToOrigin()
     {
-        transform.SetParent(startParent);
-        rectTransform.anchoredPosition = startAnchoredPos;
+        ReturnToStartPosition();
     }
 
     protected virtual void OnDragStart(PointerEventData eventData) { }

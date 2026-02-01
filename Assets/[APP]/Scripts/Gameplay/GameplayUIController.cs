@@ -34,7 +34,7 @@ public class GameplayUIController : MonoBehaviour
 
     private void Start()
     {
-        brewingSystem.OnTeaServed += OnTeaServed;
+        GameplayEvents.OnTeaServed += OnTeaServed;
         brewingSystem.SetInteractable(false);
 
         servedCount = 0;
@@ -46,7 +46,7 @@ public class GameplayUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (brewingSystem != null) brewingSystem.OnTeaServed -= OnTeaServed;
+        GameplayEvents.OnTeaServed -= OnTeaServed;
     }
 
     // --- PHASE 1: ARRIVAL ---
