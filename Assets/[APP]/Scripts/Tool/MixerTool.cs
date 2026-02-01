@@ -11,6 +11,12 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
     [SerializeField] private Image powderResultImage;
     [SerializeField] private List<Image> slotIcons;
 
+    [Header("Visual Feedback")]
+    [SerializeField] private Image statusIndicator; // Drag Image kosong/icon status di sini
+    [SerializeField] private Sprite iconCheck;      // Gambar Centang Hijau (Brewable)
+    [SerializeField] private Sprite iconCross;      // Gambar Silang Merah (Ruined)
+    [SerializeField] private Color ruinedColor = new Color(0.3f, 0.3f, 0.3f, 1f); // Warna butek
+
     private TeaBrewingSystem brewingSystem;
     private bool isPowderReady = false;
     private TeaData readyTeaData;
@@ -49,22 +55,67 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
 
     private void UpdateVisuals(List<TeaEssenceData> potContent, BrewingStatus status)
     {
+        // 1. Update Ikon Bahan (Looping biasa)
         for (int i = 0; i < slotIcons.Count; i++)
         {
-            slotIcons[i].enabled = i < potContent.Count;
-            if (i < potContent.Count) slotIcons[i].sprite = potContent[i].DraggableIcon;
+            if (i < potContent.Count)
+            {
+                slotIcons[i].enabled = true;
+                slotIcons[i].sprite = potContent[i].DraggableIcon;
+
+                // Reset warna icon (kalau sebelumnya di-tint ruined)
+                slotIcons[i].color = Color.white;
+            }
+            else
+            {
+                slotIcons[i].enabled = false;
+            }
         }
 
-        if (status == BrewingStatus.Brewable)
+        // 2. LOGIC BARU: Indikator Status
+        if (statusIndicator != null)
         {
-            readyTeaData = brewingSystem.PreviewRecipe();
-            pestle.SetGrindable(true);
-            Debug.Log("Mixer: Siap diulek!");
+            switch (status)
+            {
+                case BrewingStatus.Brewable:
+                    statusIndicator.enabled = true;
+                    statusIndicator.sprite = iconCheck;
+                    statusIndicator.color = Color.white;
+                    pestle.SetGrindable(true); // Boleh diulek
+                    readyTeaData = brewingSystem.PreviewRecipe();
+                    break;
+
+                case BrewingStatus.Ruined:
+                    statusIndicator.enabled = true;
+                    statusIndicator.sprite = iconCross;
+                    statusIndicator.color = Color.red; // Merah tanda bahaya
+                    pestle.SetGrindable(false); // Gak boleh diulek
+                    readyTeaData = null;
+
+                    // Opsional: Bikin bahan-bahannya jadi warna butek
+                    foreach (var icon in slotIcons) icon.color = ruinedColor;
+                    break;
+
+                case BrewingStatus.Incomplete:
+                default:
+                    statusIndicator.enabled = false; // Sembunyikan kalau belum selesai
+                    pestle.SetGrindable(false);
+                    readyTeaData = null;
+                    break;
+            }
         }
-        else
+        else // Fallback kalau gak pake indikator, pake logic lama
         {
-            pestle.SetGrindable(false);
-            readyTeaData = null;
+            if (status == BrewingStatus.Brewable)
+            {
+                readyTeaData = brewingSystem.PreviewRecipe();
+                pestle.SetGrindable(true);
+            }
+            else
+            {
+                pestle.SetGrindable(false);
+                readyTeaData = null;
+            }
         }
     }
 
@@ -129,12 +180,24 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
     {
         if (canvasGroup != null) canvasGroup.blocksRaycasts = true;
 
+        // 1. Cek Drop ke Gelas (Tuang)
         GlassTool glass = eventData.pointerEnter?.GetComponent<GlassTool>();
-
         if (glass != null && isPowderReady)
         {
             glass.AddPowder(readyTeaData);
             ResetMixerTotal();
+            LeanTween.move(rectTransform, originalPos, 0.3f).setEaseOutBack();
+            return;
+        }
+
+        // 2. Cek Drop ke Sampah (Buang) -- TAMBAHAN BARU --
+        TrashTool trash = eventData.pointerEnter?.GetComponent<TrashTool>();
+        if (trash != null)
+        {
+            trash.DisposeItem(this); // Panggil fungsi di TrashTool
+            // Mixer otomatis kereset di dalam DisposeItem
+            LeanTween.move(rectTransform, originalPos, 0.3f).setEaseOutBack();
+            return;
         }
 
         // Balik ke posisi meja

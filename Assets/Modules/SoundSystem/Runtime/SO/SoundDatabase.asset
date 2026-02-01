@@ -16,7 +16,7 @@ MonoBehaviour:
   - id: bgm
     items:
     - key: bgm_home
-      value: {fileID: 8300000, guid: 1c248113725386a41829f726df14fccb, type: 3}
+      value: {fileID: 8300000, guid: 2889ab00480c241c5953718cb95c9207, type: 3}
       type: 0
     - key: bgm_game
       value: {fileID: 8300000, guid: 49ff5d3e71a5b497585b20ab746f544e, type: 3}

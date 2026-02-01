@@ -53,14 +53,22 @@ public class GlassTool : InteractableObject
     // 3. Logic Drag ke Coaster (Hijau)
     protected override bool TryHandleDrop(PointerEventData eventData)
     {
+        // 1. Cek Coaster (Sajikan)
         CoasterZone coaster = eventData.pointerEnter?.GetComponent<CoasterZone>();
-
-        // PENTING: Cek IsReadyToServe sebelum menyajikan
         if (coaster != null && IsReadyToServe)
         {
             coaster.Serve(this);
             return true;
         }
+
+        // 2. Cek Trash (Buang Isi) -- TAMBAHAN BARU --
+        TrashTool trash = eventData.pointerEnter?.GetComponent<TrashTool>();
+        if (trash != null)
+        {
+            trash.DisposeItem(this); // Gelas jadi bersih lagi
+            return false; // Return false biar dia balik ke meja (animasi DetachToOrigin)
+        }
+
         return false;
     }
 
@@ -69,10 +77,10 @@ public class GlassTool : InteractableObject
         // Matikan gambar air dan bubuk
         contentImage.enabled = false;
         powderVisual.SetActive(false);
-        
+
         // Matikan gambar gelasnya sendiri (CanvasGroup alpha 0)
         // Pastikan Glass punya CanvasGroup ya (dari InteractableObject pasti punya)
-        GetComponent<CanvasGroup>().alpha = 0f; 
+        GetComponent<CanvasGroup>().alpha = 0f;
     }
 
     public void ResetGlass()
@@ -89,8 +97,8 @@ public class GlassTool : InteractableObject
         GetComponent<CanvasGroup>().alpha = 1f;
 
         // 3. Reset Posisi Fisik
-        ForceReset(); 
-        
+        ForceReset();
+
         Debug.Log("Glass Cleaned & Returned to Table.");
     }
 
