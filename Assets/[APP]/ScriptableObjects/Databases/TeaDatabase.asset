@@ -17,3 +17,9 @@ MonoBehaviour:
   items:
   - key: Tea_A
     value: {fileID: 11400000, guid: cc2c4e669ec364981abefaf427a48ada, type: 2}
+  - key: Tea_B
+    value: {fileID: 11400000, guid: 73a5a1a14b1d141e7aeca6b67b802cdc, type: 2}
+  - key: Tea_C
+    value: {fileID: 11400000, guid: be85df69cdc4544c28e94f1ce70be2a8, type: 2}
+  - key: Tea_D
+    value: {fileID: 11400000, guid: 4ee9758b0eae1429290afbb3bc8f4bdf, type: 2}

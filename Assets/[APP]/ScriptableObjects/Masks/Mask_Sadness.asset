@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8bced1d7764e4f0b93f1e5f226e559a, type: 3}
-  m_Name: Mask_Test
+  m_Name: Mask_Sadness
   m_EditorClassIdentifier: Assembly-CSharp::MaskData
-  maskId: Mask_Test
-  maskName: Mask Uji Coba
+  maskId: Mask_Sadness
+  maskName: Sadness
   maxCrackPoints: 100
   emotionType: 0
   possibleStories:

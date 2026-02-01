@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fc8da497471d4641ad76a54d231e509, type: 3}
-  m_Name: TeaEssence_B
+  m_Name: Rose
   m_EditorClassIdentifier: Assembly-CSharp::TeaEssenceData
-  essenceId: TeaEssence_B
-  essenceName: Red
-  icon: {fileID: 21300000, guid: c46484d2f3fb841b58f803460517a4c2, type: 3}
-  draggableIcon: {fileID: 21300000, guid: c46484d2f3fb841b58f803460517a4c2, type: 3}
+  essenceId: Rose
+  essenceName: Rose
+  icon: {fileID: 21300000, guid: b21860ae60cb449db8e671bc941e912f, type: 3}
+  draggableIcon: {fileID: 21300000, guid: dffc6ab9b044e42159e13aa3652aa32c, type: 3}

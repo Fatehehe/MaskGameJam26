@@ -19,7 +19,7 @@ public class EssenceObject : InteractableObject
             return;
         }
 
-        icon.sprite = data.DraggableIcon;
+        icon.sprite = data.Icon;
     }
 
     protected override bool TryHandleDrop(PointerEventData eventData)

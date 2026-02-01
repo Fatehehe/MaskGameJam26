@@ -1,12 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class PestleTool : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    [Header("Settings")]
-    [SerializeField] private float grindRadius = 50f;
-    [SerializeField] private float grindThreshold = 1000f;
+    [Header("Grind Settings")]
+    [SerializeField] private float grindThreshold = 1000f; // Total gesekan yang dibutuhkan
+    
+    [Header("Movement Limits (Local Position)")]
+    // Sesuaikan angka ini di Inspector pas Play Mode biar pas sama gambar mangkukmu
+    [SerializeField] private float minX = -50f; 
+    [SerializeField] private float maxX = 50f;
+    [SerializeField] private float minY = -20f;
+    [SerializeField] private float maxY = 30f;
+
+    [Header("Visual Juice")]
+    [SerializeField] private float tiltAmount = 15f; // Miring dikit pas digerakin
 
     private RectTransform rectTransform;
     private Vector2 initialPos;
@@ -25,42 +33,52 @@ public class PestleTool : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     {
         isGrindable = state;
         currentGrindProgress = 0;
-        // Opsional: Ganti warna/visual pestle kalau siap ngulek
+        // Opsional: Reset posisi pestle ke tengah
+        rectTransform.anchoredPosition = initialPos;
     }
 
     public void OnBeginDrag(PointerEventData eventData) { }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // 1. Logic Gerak Terbatas (Clamped Position)
-        Vector2 targetPos = rectTransform.anchoredPosition + (eventData.delta / GetComponentInParent<Canvas>().scaleFactor);
-        
-        // Batasi jarak dari titik tengah (Vector2.zero asusmsi parentnya di tengah mortar)
-        if (targetPos.magnitude > grindRadius)
-        {
-            targetPos = targetPos.normalized * grindRadius;
-        }
+        // 1. Hitung Posisi Baru
+        Vector2 delta = eventData.delta / GetComponentInParent<Canvas>().scaleFactor;
+        Vector2 targetPos = rectTransform.anchoredPosition + delta;
+
+        // 2. BATASI GERAKAN (CLAMP) - Biar gak keluar dari mangkuk oranye
+        targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
+        targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
+
         rectTransform.anchoredPosition = targetPos;
 
-        // 2. Logic Grinding
+        // 3. Efek Visual: Miringkan ulekan sesuai posisi X
+        // Kalau di kiri miring kiri, di kanan miring kanan
+        float normalizedX = Mathf.InverseLerp(minX, maxX, targetPos.x); // 0 (kiri) s/d 1 (kanan)
+        float targetAngle = Mathf.Lerp(tiltAmount, -tiltAmount, normalizedX);
+        rectTransform.localRotation = Quaternion.Euler(0, 0, targetAngle);
+
+        // 4. Hitung Progress Ngulek
         if (isGrindable)
         {
-            // Tambahkan jarak yang ditempuh mouse ke progress
-            currentGrindProgress += eventData.delta.magnitude;
+            // Kita pakai magnitude delta biar gerakan bolak-balik dihitung
+            currentGrindProgress += delta.magnitude;
 
             if (currentGrindProgress >= grindThreshold)
             {
-                isGrindable = false;
+                isGrindable = false; // Stop grinding
                 OnGrindFinished?.Invoke();
+                
+                // Efek visual selesai (misal balik tegak)
+                LeanTween.rotateZ(gameObject, 0f, 0.2f);
                 Debug.Log("Grinding Complete!");
-                // Feedback Visual: Partikel debu / suara ulek
             }
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Kembalikan ke posisi tengah biar rapi
-        LeanTween.move(rectTransform, initialPos, 0.2f).setEaseOutBack();
+        // Balik ke posisi istirahat (tengah mangkuk)
+        LeanTween.move(rectTransform, initialPos, 0.3f).setEaseOutBack();
+        LeanTween.rotateZ(gameObject, 0f, 0.3f);
     }
 }

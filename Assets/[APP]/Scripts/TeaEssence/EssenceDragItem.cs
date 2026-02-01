@@ -16,7 +16,7 @@ public class EssenceDragItem : InteractableObject
 
     protected override bool TryHandleDrop(PointerEventData eventData)
     {
-        var dropTarget = eventData.pointerEnter?.GetComponent<IEssenceDropTarget>();
+        var dropTarget = eventData.pointerEnter?.GetComponentInParent<IEssenceDropTarget>();
 
         if (dropTarget != null && dropTarget.TryAccept(data))
         {
@@ -30,6 +30,19 @@ public class EssenceDragItem : InteractableObject
 
     protected override void OnDragging(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if (canvas == null) return;
+
+        RectTransform canvasRect = canvas.transform as RectTransform;
+        Vector2 localCursorPos;
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            eventData.position,
+            canvas.worldCamera, // Gunakan kamera canvas (null jika Overlay, tidak masalah)
+            out localCursorPos))
+        {
+            // Set posisi langsung ke titik mouse
+            rectTransform.anchoredPosition = localCursorPos;
+        }
     }
 }

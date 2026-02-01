@@ -15,5 +15,5 @@ MonoBehaviour:
   searchFolders:
   - Assets/[APP]/ScriptableObjects/Masks
   items:
-  - key: Mask_Test
+  - key: Mask_Sadness
     value: {fileID: 11400000, guid: 38263d6efaff140cfbf65db85d1a5c01, type: 2}

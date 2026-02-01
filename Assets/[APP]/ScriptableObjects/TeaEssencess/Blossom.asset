@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fc8da497471d4641ad76a54d231e509, type: 3}
-  m_Name: TeaEssence_A
+  m_Name: Blossom
   m_EditorClassIdentifier: Assembly-CSharp::TeaEssenceData
-  essenceId: TeaEssence_A
-  essenceName: Green
-  icon: {fileID: 21300000, guid: 3d50a8eed200e4ebb94aeac66587e2d2, type: 3}
-  draggableIcon: {fileID: 21300000, guid: 3d50a8eed200e4ebb94aeac66587e2d2, type: 3}
+  essenceId: Blossom
+  essenceName: Blossom
+  icon: {fileID: 21300000, guid: 49fc61622e1cb43409e50c68b9cf2e28, type: 3}
+  draggableIcon: {fileID: 21300000, guid: 92bbf2a85dda74f1ba51e1f6d884cf38, type: 3}

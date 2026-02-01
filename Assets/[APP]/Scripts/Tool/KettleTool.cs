@@ -27,7 +27,7 @@ public class KettleTool : InteractableObject
         base.ForceReset();
 
         CancelBoiling();
-        
+
         if (currentStove != null)
         {
             currentStove.RemoveKettle();

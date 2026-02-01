@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("Components")]
@@ -19,12 +20,17 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
     private RectTransform rectTransform;
     private Canvas canvas;
 
+    private CanvasGroup canvasGroup;
+
     public void Initialize(TeaBrewingSystem brewingSystem)
     {
         this.brewingSystem = brewingSystem;
         pestle.OnGrindFinished += HandleGrindFinished;
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
+
+        canvasGroup = GetComponent<CanvasGroup>();
+
         initialPos = originalPos = rectTransform.anchoredPosition;
         powderResultImage.enabled = false;
     }
@@ -45,15 +51,8 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
     {
         for (int i = 0; i < slotIcons.Count; i++)
         {
-            if (i < potContent.Count)
-            {
-                slotIcons[i].enabled = true;
-                slotIcons[i].sprite = potContent[i].Icon;
-            }
-            else
-            {
-                slotIcons[i].enabled = false;
-            }
+            slotIcons[i].enabled = i < potContent.Count;
+            if (i < potContent.Count) slotIcons[i].sprite = potContent[i].DraggableIcon;
         }
 
         if (status == BrewingStatus.Brewable)
@@ -71,15 +70,8 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
 
     public bool TryAccept(TeaEssenceData essence)
     {
-        if (essence == null)
-            return false;
-
-        if (brewingSystem.CurrentPotCount >= TeaBrewingSystem.MAX_ESSENCES_IN_POT)
-        {
-            Debug.Log("Mixer Full!");
-            return false;
-        }
-
+        if (essence == null) return false;
+        if (brewingSystem.CurrentPotCount >= TeaBrewingSystem.MAX_ESSENCES_IN_POT) return false;
         brewingSystem.AddEssenceToPot(essence);
         return true;
     }
@@ -87,10 +79,15 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
     private void HandleGrindFinished()
     {
         isPowderReady = true;
-        foreach(var icon in slotIcons) icon.enabled = false;
+        for (int i = 0; i < slotIcons.Count; i++)
+        {
+            Image icon = slotIcons[i];
+            icon.enabled = false;
+        }
+
         powderResultImage.enabled = true;
         powderResultImage.sprite = readyTeaData.GrindedIcon;
-        
+
         Debug.Log("Mixer: Bubuk jadi! Drag Mixer ke Gelas untuk menuang.");
     }
 
@@ -103,7 +100,11 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
         pestle.SetGrindable(false);
 
         // 2. Reset Tampilan Icon Slot
-        foreach(var icon in slotIcons) icon.enabled = false;
+        for (int i = 0; i < slotIcons.Count; i++)
+        {
+            Image icon = slotIcons[i];
+            icon.enabled = false;
+        }
 
         // 3. Reset Posisi Mixer ke Meja
         if (rectTransform != null)
@@ -114,22 +115,24 @@ public class MixerTool : MonoBehaviour, IEssenceDropTarget, IBeginDragHandler, I
         }
     }
 
-    public void OnBeginDrag(PointerEventData eventData) { }
-    
-    public void OnDrag(PointerEventData eventData) 
+    public void OnBeginDrag(PointerEventData eventData)
     {
+        if (canvasGroup != null) canvasGroup.blocksRaycasts = false;
+    }
 
+    public void OnDrag(PointerEventData eventData)
+    {
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Cek apakah didrop di atas Gelas?
+        if (canvasGroup != null) canvasGroup.blocksRaycasts = true;
+
         GlassTool glass = eventData.pointerEnter?.GetComponent<GlassTool>();
-        
+
         if (glass != null && isPowderReady)
         {
-            // Tuang bubuk ke gelas
             glass.AddPowder(readyTeaData);
             ResetMixerTotal();
         }

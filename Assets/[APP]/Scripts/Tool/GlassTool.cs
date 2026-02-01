@@ -5,17 +5,16 @@ using UnityEngine.UI;
 public class GlassTool : InteractableObject
 {
     [Header("Visuals")]
-    [SerializeField] private Image contentImage; // Warna air
-    [SerializeField] private GameObject powderVisual; // Bubuk di dasar gelas
-    [SerializeField] private GameObject spoonSnapPoint; // Tempat sendok nempel
+    [SerializeField] private Image contentImage; // Gambar air teh
+    [SerializeField] private GameObject powderVisual; // Gambar bubuk di dasar
+    // Hapus spoonSnapPoint karena gak pake sendok lagi
 
     private TeaData currentTea;
     private bool hasPowder = false;
     private bool hasWater = false;
-    private bool isStirred = false;
 
-    public Transform SpoonSnapPoint => spoonSnapPoint.transform;
-    public bool IsReadyToServe => isStirred && hasWater && hasPowder;
+    // Logic baru: Siap saji kalau ada Bubuk + Air (Gak perlu diaduk)
+    public bool IsReadyToServe => hasWater && hasPowder;
     public TeaData FinalTea => currentTea;
 
     protected override void Awake()
@@ -24,44 +23,39 @@ public class GlassTool : InteractableObject
         ResetGlass();
     }
 
-    // 1. Terima Bubuk dari Mixer
+    // 1. Terima Bubuk (Dari Mixer)
     public void AddPowder(TeaData tea)
     {
-        if (hasWater) return; // Gabisa nambah bubuk kalau udah ada air (opsional logic)
-        
+        if (hasWater) return;
+
         currentTea = tea;
         hasPowder = true;
         powderVisual.SetActive(true);
         Debug.Log($"Glass: Bubuk {tea.TeaName} masuk.");
     }
 
-    // 2. Terima Air Panas dari Kettle (Dipanggil KettleTool)
+    // 2. Terima Air Panas (Dari Kettle)
     public void AddHotWater()
     {
-        if (!hasPowder) return; // Harus ada bubuk dulu
-        
+        if (!hasPowder) return;
+
         hasWater = true;
         powderVisual.SetActive(false); // Bubuk larut
-        contentImage.color = Color.Lerp(Color.white, Color.brown, 0.5f); // Warna keruh sebelum diaduk
         contentImage.enabled = true;
-        Debug.Log("Glass: Air panas dituang.");
+
+        // Langsung set warna teh final (Gak perlu keruh dulu)
+        // Kalau mau canggih: Ambil warna dari TeaData.LiquidColor
+        contentImage.color = new Color(0.6f, 0.3f, 0f, 1f); // Coklat teh default
+
+        Debug.Log("Glass: Air panas dituang. Teh Siap Saji!");
     }
 
-    // 3. Selesai Diaduk (Dipanggil SpoonTool)
-    public void FinishStirring()
-    {
-        if (!hasWater) return;
-        
-        isStirred = true;
-        contentImage.color = Color.green; // Ganti warna final teh (bisa ambil dari TeaData)
-        Debug.Log("Glass: Teh siap disajikan!");
-    }
-
-    // 4. Drag Logic (Sajikan ke Coaster)
+    // 3. Logic Drag ke Coaster (Hijau)
     protected override bool TryHandleDrop(PointerEventData eventData)
     {
         CoasterZone coaster = eventData.pointerEnter?.GetComponent<CoasterZone>();
-        
+
+        // PENTING: Cek IsReadyToServe sebelum menyajikan
         if (coaster != null && IsReadyToServe)
         {
             coaster.Serve(this);
@@ -70,18 +64,42 @@ public class GlassTool : InteractableObject
         return false;
     }
 
+    public void HideVisuals()
+    {
+        // Matikan gambar air dan bubuk
+        contentImage.enabled = false;
+        powderVisual.SetActive(false);
+        
+        // Matikan gambar gelasnya sendiri (CanvasGroup alpha 0)
+        // Pastikan Glass punya CanvasGroup ya (dari InteractableObject pasti punya)
+        GetComponent<CanvasGroup>().alpha = 0f; 
+    }
+
     public void ResetGlass()
     {
+        // 1. Reset Data
         hasPowder = false;
         hasWater = false;
-        isStirred = false;
         powderVisual.SetActive(false);
         contentImage.enabled = false;
         currentTea = null;
         contentImage.color = Color.white;
 
+        // 2. Munculkan Visualnya Lagi (Alpha 1)
+        GetComponent<CanvasGroup>().alpha = 1f;
+
+        // 3. Reset Posisi Fisik
         ForceReset(); 
         
         Debug.Log("Glass Cleaned & Returned to Table.");
+    }
+
+    protected override void OnDragging(PointerEventData eventData)
+    {
+        // Update posisi berdasarkan gerakan mouse dan scale factor canvas
+        if (canvas != null)
+        {
+            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        }
     }
 }

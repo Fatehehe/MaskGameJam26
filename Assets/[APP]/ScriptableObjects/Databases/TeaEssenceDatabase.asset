@@ -15,7 +15,13 @@ MonoBehaviour:
   searchFolders:
   - Assets/[APP]/ScriptableObjects/TeaEssencess
   items:
-  - key: TeaEssence_A
+  - key: Blossom
+    value: {fileID: 11400000, guid: a2a523899a5644a62ac12aa0a4c29fdc, type: 2}
+  - key: Leaf
     value: {fileID: 11400000, guid: 584c55b95737341f2a16ec64317301eb, type: 2}
-  - key: TeaEssence_B
+  - key: Rose
+    value: {fileID: 11400000, guid: 5d4381a427965434388c4a90dc37a5d5, type: 2}
+  - key: Rosella
     value: {fileID: 11400000, guid: dbd975363a74d41d7b1dc13f1cef6a52, type: 2}
+  - key: Rosellia
+    value: {fileID: 11400000, guid: 7aa5816e0ad2a4da9ba267f06b0c815b, type: 2}
