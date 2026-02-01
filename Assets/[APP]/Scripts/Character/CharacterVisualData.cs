@@ -11,8 +11,6 @@ public class CharacterVisualData : ScriptableObject
     [Header("Visual Assets")]
     [SerializeField] private Sprite bodySprite;
     public Sprite BodySprite => bodySprite;
-    [SerializeField] private Sprite unmaskedFace;
-    public Sprite UnmaskedFace => unmaskedFace;
 
     [Header("Identity")]
     [SerializeField] private GenderType gender;

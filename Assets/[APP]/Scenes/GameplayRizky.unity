@@ -613,10 +613,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayUIController
       objectReference: {fileID: 0}
-    - target: {fileID: 8188161727654254162, guid: 4bc90f3e626824dc9b9d0c9d16e630ba, type: 3}
-      propertyPath: walkDuration
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -652,81 +648,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 545866514744502551, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -23.400024
-      objectReference: {fileID: 0}
-    - target: {fileID: 545866514744502551, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 255
-      objectReference: {fileID: 0}
-    - target: {fileID: 3430237447111030099, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3430237447111030099, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3430237447111030099, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3430237447111030099, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3620978894904475618, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3620978894904475618, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3620978894904475618, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3620978894904475618, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5194754261390270388, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
       propertyPath: m_Name
       value: GameplayTeaBrewController
-      objectReference: {fileID: 0}
-    - target: {fileID: 6786628149736680196, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6786628149736680196, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6786628149736680196, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6786628149736680196, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145843579689738474, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145843579689738474, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145843579689738474, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145843579689738474, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8092077475942438677, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -768,22 +692,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9071507492560985630, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9071507492560985630, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9071507492560985630, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9071507492560985630, guid: 8ac99e93589e54232ab24040f333e17c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -798,5 +706,5 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1108522456}
   - {fileID: 2028792753}
-  - {fileID: 697628713}
   - {fileID: 1717374762790180270}
+  - {fileID: 697628713}

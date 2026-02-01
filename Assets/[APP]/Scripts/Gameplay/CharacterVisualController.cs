@@ -43,8 +43,6 @@ public class CharacterVisualController : MonoBehaviour
                 break;
             case MaskState.Broken:
                 maskImage.enabled = false;
-                if (customer.ActiveCharacterVisual.UnmaskedFace != null)
-                    bodyImage.sprite = customer.ActiveCharacterVisual.UnmaskedFace;
                 break;
         }
     }
