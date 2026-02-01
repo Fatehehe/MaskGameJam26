@@ -29,9 +29,6 @@ public class MaskData : ScriptableObject
     [SerializeField] private Sprite crackedMaskSprite;
     public Sprite CrackedMaskSprite => crackedMaskSprite;
 
-    [SerializeField] private Sprite brokenMaskSprite;
-    public Sprite BrokenMaskSprite => brokenMaskSprite;
-
 #if UNITY_EDITOR
     private void OnValidate()
     {
