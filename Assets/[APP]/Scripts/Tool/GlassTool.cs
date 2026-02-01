@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class GlassTool : InteractableObject
 {
     [Header("Visuals")]
+    [SerializeField] private Sprite defaultGlassSprite; // Gambar gelas kosong
+    [SerializeField] private Image glassImage; // Gambar gelas
     [SerializeField] private Image contentImage; // Gambar air teh
     [SerializeField] private GameObject powderVisual; // Gambar bubuk di dasar
     // Hapus spoonSnapPoint karena gak pake sendok lagi
@@ -42,10 +44,20 @@ public class GlassTool : InteractableObject
         hasWater = true;
         powderVisual.SetActive(false); // Bubuk larut
         contentImage.enabled = true;
+        glassImage.sprite = defaultGlassSprite;
 
         // Langsung set warna teh final (Gak perlu keruh dulu)
         // Kalau mau canggih: Ambil warna dari TeaData.LiquidColor
-        contentImage.color = new Color(0.6f, 0.3f, 0f, 1f); // Coklat teh default
+        if (currentTea.Icon != null)
+        {
+            glassImage.sprite = currentTea.Icon;
+            contentImage.color = Color.white;
+            contentImage.enabled = false;
+        }
+        else
+        {
+            contentImage.color = new Color(0.6f, 0.3f, 0f, 1f); // Coklat teh default
+        }
 
         Debug.Log("Glass: Air panas dituang. Teh Siap Saji!");
     }
@@ -92,6 +104,7 @@ public class GlassTool : InteractableObject
         contentImage.enabled = false;
         currentTea = null;
         contentImage.color = Color.white;
+        glassImage.sprite = defaultGlassSprite;
 
         // 2. Munculkan Visualnya Lagi (Alpha 1)
         GetComponent<CanvasGroup>().alpha = 1f;
