@@ -1,6 +1,7 @@
 using VContainer;
 using VContainer.Unity;
 using UnityEngine;
+using Modules.SoundSystems;
 
 public class GameplayLifetimeScope : LifetimeScope
 {
@@ -20,5 +21,11 @@ public class GameplayLifetimeScope : LifetimeScope
         // UI Controller
         builder.RegisterComponent(gameplayUIController);
         builder.RegisterComponent(gameplayTeaBrewController);
+
+        if (SoundSystem.Instance != null)
+        {
+            SoundSystem.Instance.PlayAudio("bgm_game");
+            SoundSystem.Instance.GlobalMusicVolume = 0.3f;
+        }
     }
 }

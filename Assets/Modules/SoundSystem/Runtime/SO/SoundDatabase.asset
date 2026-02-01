@@ -15,17 +15,12 @@ MonoBehaviour:
   sounds:
   - id: bgm
     items:
-    - key: bgm_menu
+    - key: bgm_home
       value: {fileID: 8300000, guid: 1c248113725386a41829f726df14fccb, type: 3}
       type: 0
     - key: bgm_game
-      value: {fileID: 8300000, guid: 17e8e73b73691374ca2c5c1d7ab74a78, type: 3}
+      value: {fileID: 8300000, guid: 49ff5d3e71a5b497585b20ab746f544e, type: 3}
       type: 0
-  - id: gameplay
-    items:
-    - key: click
-      value: {fileID: 8300000, guid: e1d6c42289860804bb77fc2c998e1083, type: 3}
-      type: 1
   randomizePitchForDuplicates: 1
   minPitch: 0.75
   maxPitch: 1.25
